@@ -84,7 +84,7 @@ export class EditProfileDialogComponent {
   async updateUsers() {
     this.boardServ.currentUser = this.storageService.loadCurrentUser();
     this.boardServ.loadCurrentUser();
-    // await this.firestoreService.updateUser(this.boardServ.currentUser.id, this.boardServ.currentUser);
+    console.log(this.boardServ.currentUser);
   }
 
   async updateMember() {
@@ -93,6 +93,8 @@ export class EditProfileDialogComponent {
       chan.members.forEach(member => {
         if (member.id == this.boardServ.currentUser.id) {
           member.name = this.boardServ.currentUser.name;
+          member.avatarPath = this.boardServ.currentUser.avatarPath;
+          member.email = this.boardServ.currentUser.email;
         }
       })
       if (chan.id) {
@@ -107,6 +109,8 @@ export class EditProfileDialogComponent {
         chan.chat.forEach((chat) => {
           if (chat.user.id == this.boardServ.currentUser.id) {
             chat.user.name = this.boardServ.currentUser.name;
+            chat.user.email = this.boardServ.currentUser.email;
+            chat.user.avatarPath = this.boardServ.currentUser.avatarPath;
           }
         })
         if (chan.id) {
@@ -124,9 +128,11 @@ export class EditProfileDialogComponent {
       } else if (dm.creator.id == this.boardServ.currentUser.id) {
         dm.creator.name = this.boardServ.currentUser.name;
       }
-      dm.chat.forEach((chat)=> {
-        if(chat.user.id == this.boardServ.currentUser.id){
-         chat.user.name = this.boardServ.currentUser.name;
+      dm.chat.forEach((chat) => {
+        if (chat.user.id == this.boardServ.currentUser.id) {
+          chat.user.name = this.boardServ.currentUser.name;
+          chat.user.email = this.boardServ.currentUser.email;
+          chat.user.avatarPath = this.boardServ.currentUser.avatarPath;
         }
       })
       if (dm.id) {
