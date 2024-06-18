@@ -1,10 +1,10 @@
 export const environment = {
-    firebaseConfig: {
-        apiKey: "AIzaSyCIw_VDLdKIe_07ziFPONisF9RCaRb72ac",
-        authDomain: "da-bubble-697bb.firebaseapp.com",
-        projectId: "da-bubble-697bb",
-        storageBucket: "da-bubble-697bb.appspot.com",
-        messagingSenderId: "177261164734",
-        appId: "1:177261164734:web:c1a9d6e1ba5fe82dd4c6ef"
-      }
+  firebaseConfig: {
+    apiKey: "AIzaSyA8B0q_JLp-wSIQTx_wM1dA4e0QRaXd3us",
+    authDomain: "da-bubble-privat.firebaseapp.com",
+    projectId: "da-bubble-privat",
+    storageBucket: "da-bubble-privat.appspot.com",
+    messagingSenderId: "460262721533",
+    appId: "1:460262721533:web:5cdf2206d9506185037b94"
+  }
 };

@@ -18,6 +18,5 @@ export const appConfig: ApplicationConfig = {
       provideAuth(() => getAuth()),
       provideStorage(() => getStorage())
     ]
-    )],
+    ), importProvidersFrom(provideAuth(() => getAuth())), importProvidersFrom(provideFirestore(() => getFirestore())), importProvidersFrom(provideStorage(() => getStorage()))],
 };
-

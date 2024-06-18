@@ -53,9 +53,8 @@ export class SignupService {
     this.user$.subscribe((val) => {
       this.user = new User(val);
     });
-    this.actionCodeSettings = { url: 'https://dabubble-212.developerakademie.net/angular-projects/dabubble/resetpassword' };
+    this.actionCodeSettings = { url: 'https://dabubble.vincenzo-rispoli.de/' };
   }
-
   async googleLogin() {
     await signInWithRedirect(this.auth, this.provider).catch((err) =>
       console.error(err)

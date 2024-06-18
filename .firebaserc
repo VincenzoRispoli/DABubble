@@ -6,9 +6,16 @@
           "da-bubble-697bb"
         ]
       }
+    },
+    "da-bubble-privat": {
+      "hosting": {
+        "dabubble": [
+          "da-bubble-privat"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "da-bubble-697bb"
+    "default": "da-bubble-privat"
   }
 }
