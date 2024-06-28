@@ -1,0 +1,23 @@
+@for(privateChat of firestore.directMessages; track privateChat) {
+@if(boardServ.currentUser.id == privateChat.creator.id && privateChat.guest.privatNotification.length > 0){
+<div [ngStyle]="{'transform': privateChat.guest.newPrivateMessage ? 'translateX(0%)' : 'translateX(100%)'}"
+    class="pop-up-privat-notification">
+    <div class="name-and-image-container">
+        <img class="avatar-img" src="{{privateChat.guest.avatarPath}}" alt="">
+        <span class="avatar-name">{{privateChat.guest.name}}</span>
+    </div>
+    <p class="text">{{privateChat.guest.privatNotification[privateChat.guest.privatNotification.length -1].text}}</p>
+</div>
+}
+@else if(boardServ.currentUser.id == privateChat.guest.id && privateChat.creator.privatNotification.length > 0){
+<div [ngStyle]="{'transform': privateChat.creator.newPrivateMessage ? 'translateX(0%)' : 'translateX(100%)'}"
+    class="pop-up-privat-notification">
+    <div class="name-and-image-container">
+        <img class="avatar-img" src="{{privateChat.creator.avatarPath}}" alt="">
+        <span class="avatar-name">{{privateChat.creator.name}}</span>
+    </div>
+    <p class="text">{{privateChat.creator.privatNotification[privateChat.creator.privatNotification.length -1].text}}
+    </p>
+</div>
+}
+}

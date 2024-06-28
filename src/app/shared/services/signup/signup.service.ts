@@ -53,8 +53,9 @@ export class SignupService {
     this.user$.subscribe((val) => {
       this.user = new User(val);
     });
-    this.actionCodeSettings = { url: 'https://dabubble.vincenzo-rispoli.de/' };
+    this.actionCodeSettings = { url: 'https://dabubble.vincenzo-rispoli.de' };
   }
+
   async googleLogin() {
     await signInWithRedirect(this.auth, this.provider).catch((err) =>
       console.error(err)
@@ -182,7 +183,9 @@ export class SignupService {
       avatarPath: this.user.avatarPath,
       loginState: "loggedOut",
       type: 'CurrentUser',
-      notification: []
+      notification: [],
+      privatNotification: [],
+      newPrivateMessage: false
     };
   }
 
@@ -226,11 +229,11 @@ export class SignupService {
     await signInWithEmailAndPassword(this.auth, 'gast@gast.de', '12345678')
       .then((userCredential) => {
         this.updateUserProfile({ photoURL: 'assets/img/profile_big.png' })
-        .then(() => {
-          this.storageService.saveCurrentUser(this.findCurrentUser(userCredential.user));
-          this.router.navigateByUrl('board');
-        })
-        
+          .then(() => {
+            this.storageService.saveCurrentUser(this.findCurrentUser(userCredential.user));
+            this.router.navigateByUrl('board');
+          })
+
       })
       .catch(err => {
         this.errorCode = err.code;

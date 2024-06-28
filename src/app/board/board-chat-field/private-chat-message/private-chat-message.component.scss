@@ -392,7 +392,7 @@
   z-index: 99;
 
   .img-container {
-    @include d-flex();
+    @include d-flex(column-reverse, center, center, 8px);
     background-color: white;
     padding: 24px;
     border-radius: 25px;
@@ -420,21 +420,28 @@
       padding: 8px;
       background-color: #e6e6e6;
       transition: all 0.125s ease-in-out;
+
+      >img {
+        width: 64px;
+        height: 64px;
+      }
     }
   }
 
-  .close-icon {
-    cursor: pointer;
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    padding: 4px;
-    border-radius: 100%;
-    transition: all 0.125s ease-in-out;
+  .close-icon-container {
+    @include d-flex(row, flex-end, center, 0px);
+    width: 100%;
 
-    &:hover {
-      background-color: #eceefe;
-      transform: scale(1.2);
+    .close-icon {
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 100%;
+      transition: all 0.125s ease-in-out;
+
+      &:hover {
+        background-color: #eceefe;
+        transform: scale(1.2);
+      }
     }
   }
 }
@@ -442,4 +449,3 @@
 .highlight-background {
   background: #bdbfe1 !important;
 }
-

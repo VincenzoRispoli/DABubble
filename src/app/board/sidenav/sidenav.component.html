@@ -21,8 +21,6 @@
         </svg>
     </div>
     }
-
-    <!--  (input)="showText(search.value)" -->
     <div class="input-search-container-sidenav">
         <input (focus)="boardServ.loadAllData()" #search [(ngModel)]="searchText" name="searchText" type="text"
             placeholder="Coding learning durchsuchen">
@@ -124,8 +122,19 @@
                     } @else {
                     <img src="assets/icons/user_online.png" alt="" class="state-icon">
                     }
-                    <h3>
-                        {{privateChat.guest.name}}</h3>
+                    <div class="name-count-notific-preview-container">
+                        <div class="name-and-count">
+                            <h3>{{privateChat.guest.name}}</h3>
+                            @if(privateChat.guest.privatNotification.length > 0){
+                            <span class="notification-count">{{privateChat.guest.privatNotification.length}}</span>
+                            }
+                        </div>
+                        @if(privateChat.guest.privatNotification.length > 0){
+                        <span class="message-preview">
+                            {{privateChat.guest.privatNotification[privateChat.guest.privatNotification.length
+                            -1].text.split(' ').slice(0, 3).join(' ') + '...'}}</span>
+                        }
+                    </div>
                 </div>
                 } @else {
                 <div id="{{index}}" class="collegue" (click)="boardServ.startPrivateChat(index, 'guest', $event)">
@@ -137,7 +146,19 @@
                     } @else {
                     <img src="assets/icons/user_online.png" alt="" class="state-icon">
                     }
-                    <h3>{{privateChat.creator.name}}</h3>
+                    <div class="name-count-notific-preview-container">
+                        <div class="name-and-count">
+                            <h3>{{privateChat.creator.name}}</h3>
+                            @if(privateChat.creator.privatNotification.length > 0){
+                            <span class="notification-count">{{privateChat.creator.privatNotification.length}}</span>
+                            }
+                        </div>
+                        @if(privateChat.creator.privatNotification.length > 0){
+                        <span
+                            class="message-preview">{{privateChat.creator.privatNotification[privateChat.creator.privatNotification.length
+                            -1].text.split(' ').slice(0, 3).join(' ') + '...'}}</span>
+                        }
+                    </div>
                 </div>
                 }
                 }

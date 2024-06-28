@@ -253,10 +253,31 @@
             z-index: 4;
         }
 
-        >h3 {
-            font-weight: 400;
-            font-size: 18px;
+        >.name-count-notific-preview-container {
+            @include d-flex(column, space-between, flex-start, 0px);
+
+            >.name-and-count {
+                @include d-flex(row, space-between, center, 16px);
+
+                >h3 {
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+
+                .notification-count {
+                    background: #0072f5;
+                    @include d-flex();
+                    color: #fff;
+                    border-radius: 100%;
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        .message-preview{
+            color: #666;
         }
+        }
+
     }
 }
 

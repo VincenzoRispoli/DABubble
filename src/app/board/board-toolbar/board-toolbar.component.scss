@@ -26,7 +26,7 @@ div {
     padding: 17.5px 55px 17.5px 45px;
     @include d-flex($jc: space-between, $g: 16px);
 
-    > input {
+    >input {
       font-family: "Nunito";
       height: 30px;
       width: 100%;
@@ -40,7 +40,7 @@ div {
       }
     }
 
-    > img {
+    >img {
       position: absolute;
       right: 16px;
       height: 35px;
@@ -69,13 +69,13 @@ div {
     fill: $specialBlue;
   }
 
-  > span {
+  >span {
     font-size: 32px;
     font-weight: 700;
     font-family: "Nunito";
   }
 
-  > .account-photo {
+  >.account-photo {
     height: 70px;
     width: 70px;
     object-fit: cover;
@@ -84,7 +84,7 @@ div {
     cursor: pointer;
   }
 
-  > .arrow-down-user {
+  >.arrow-down-user {
     width: 13px;
     height: 8px;
     object-fit: cover;
@@ -163,7 +163,7 @@ div {
     @include d-flex($fd: column, $g: 15px, $ai: flex-start);
     align-self: flex-start;
 
-    > .profile-btn {
+    >.profile-btn {
       position: relative;
       @include d-flex($g: 15px);
       width: fit-content;
@@ -287,6 +287,20 @@ div {
   }
 }
 
+@media (max-width: 1200px) {
+  .input-search-container {
+    width: 30%;
+    padding: 17.5px 55px 17.5px 24px;
+  }
+
+  .user-container {
+    >span {
+      font-size: 24px;
+    }
+  }
+
+}
+
 @media (max-width: 1100px) {
   .user-container {
     gap: 16px;
@@ -312,11 +326,11 @@ div {
   }
 
   .user-container {
-    > span {
+    >span {
       font-size: 24px;
     }
 
-    > .account-photo {
+    >.account-photo {
       width: 48px;
       height: 48px;
     }
@@ -364,11 +378,11 @@ div {
 
 @media (max-width: 560px) {
   .user-container {
-    > span {
+    >span {
       display: none;
     }
 
-    > .arrow-down-user {
+    >.arrow-down-user {
       display: none;
     }
   }
@@ -395,7 +409,7 @@ div {
     height: 45px;
   }
 
-  .logo-container-workspace > h3 {
+  .logo-container-workspace>h3 {
     font-size: 20px;
   }
 

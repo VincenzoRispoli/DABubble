@@ -1,0 +1,39 @@
+@import '../../../styles.scss';
+
+.pop-up-privat-notification {
+    position: absolute;
+    bottom: 16px;
+    right: 0;
+    border-radius: 30px;
+    background: #fff;
+    padding: 16px;
+    max-height: 300px;
+    max-width: 300px;
+    z-index: 20;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: "Nunito";
+    transition: all 0.3s cubic-bezier(.215, .61, .355, 1);
+
+    >.name-and-image-container {
+        @include d-flex($jc: space-between, $g: 16px);
+        margin-bottom: 24px;
+
+        >.avatar-img {
+            height: 56px;
+            width: 56px;
+            border-radius: 100%;
+        }
+
+        >.avatar-name {
+            font-size: 32px;
+            font-weight: 600;
+            color: $specialBlue;
+        }
+
+    }
+
+    >.text {
+        font-size: 18px;
+        font-weight: 400;
+    }
+}

@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, inject } from '@angular/core';
+import { ElementRef, Injectable, inject, HostListener } from '@angular/core';
 
 import { SignupService } from '../shared/services/signup/signup.service';
 import { LocalStorageService } from '../shared/services/local-storage-service/local-storage.service';
@@ -58,6 +58,11 @@ export class BoardService {
   privateAnswerMessage!: ChatMessage | null;
   privateAnswerIndex!: number;
 
+  resetCreatorPrivateNotification: boolean = false;
+  resetGuestPrivateNotification: boolean = false;
+
+  newPrivateMessage: boolean = false;
+
   firstPrivateMessageWasSent: boolean = false;
   hidePopUpChatPartner: boolean = false;
   privateChatIsStarted: boolean = false;
@@ -74,23 +79,17 @@ export class BoardService {
   showSearchDialog: boolean = false;
   searchText: string = "";
 
+
   constructor() {
-    // this.checkScreenSize();
-    // this.currentUser = this.storageService.loadCurrentUser()!;
-    // if (this.currentUser.id != '') {
-    //   this.currentUser.loginState = 'loggedIn';
-    //   this.firestore.updateUser(this.currentUser.id!, this.currentUser);
-    // } else {
-    //   window.open('login', '_self');
-    // }
-    // console.log(this.currentUser);
+    console.log(this.newPrivateMessage);
   }
 
-  ngOnInit(){
-   this.loadCurrentUser();
+  ngOnInit() {
+    this.loadCurrentUser();
   }
 
-  loadCurrentUser(){
+
+  loadCurrentUser() {
     this.checkScreenSize();
     this.currentUser = this.storageService.loadCurrentUser()!;
     if (this.currentUser.id != '') {
@@ -99,7 +98,6 @@ export class BoardService {
     } else {
       window.open('login', '_self');
     }
-    console.log(this.currentUser);
   }
 
   checkScreenSize() {
@@ -254,11 +252,14 @@ export class BoardService {
     event.preventDefault();
   }
 
-  startPrivateChat(index: number, participant: string, event?: Event) {
+  async startPrivateChat(index: number, participant: string, event?: Event) {
     if (participant === "creator") {
-      this.startChat(index, 'creator');
+      await this.startChat(index, 'creator');
+      this.resetCreatorPrivateNotification = true;
+      this
     } else {
-      this.startChat(index, 'guest');
+      await this.startChat(index, 'guest');
+      this.resetGuestPrivateNotification = true;
     }
     if (event) {
       event.stopPropagation();
@@ -266,7 +267,7 @@ export class BoardService {
     this.markCurrentChat(index);
   }
 
-  startChat(index: number, role: 'creator' | 'guest') {
+  async startChat(index: number, role: 'creator' | 'guest') {
     this.chatPartnerIdx = index;
     this.privateChatId = this.firestore.directMessages[index].id || this.firestore.chatRoomId;
     this.currentChatPartner = role === 'creator' ? this.firestore.directMessages[index].guest : this.firestore.directMessages[index].creator;

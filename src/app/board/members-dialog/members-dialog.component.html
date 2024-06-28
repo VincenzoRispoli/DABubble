@@ -35,14 +35,6 @@
                 }
             }
         }
-        
-
-        <!-- @for(member of firestore.allChannels[boardServ.idx].members; track member; let index = $index){
-        <div id="{{index}}" class="member" (click)="memberServ.openShowMemberPopUp(index)">
-            <img class="avatar-members" src="{{member.avatarPath}}" alt="">
-            <span>{{member.name}}</span>
-        </div>
-        } -->
     </div>
     <div (click)="memberServ.openAddMembersDialog($event)" class="add-members-dialog-footer">
         <div class="add-person-icon-container">

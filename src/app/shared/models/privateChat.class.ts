@@ -31,7 +31,7 @@ export class PrivateChat {
             creator: this.creator,
             guest: this.guest,
             chat: this.chat,
-            type: this.type
+            type: this.type,
         }
     }
 }

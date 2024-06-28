@@ -97,7 +97,6 @@ export class MemberDialogsService implements OnInit {
   async setChatRoom(event: Event) {
     event.preventDefault();
     this.setThePrivateChatObject();
-
     if (this.isGuestExist()) {
       this.handleExistingGuest(event);
     } else {
@@ -110,12 +109,11 @@ export class MemberDialogsService implements OnInit {
   }
 
   async addNewChatRoom(event: Event) {
-    await this.firestore.addChatRoom(this.privateChat.toJSON()).then(() => {
+    await this.firestore.addChatRoom(this.privateChat.toJSON());
       this.boardServ.privateChatId = this.firestore.chatRoomId;
       this.toggleMembersDialog(event);
       this.closeShowMemberPopUp(event);
       this.startPrivateChat(event);
-    });
   }
 
   handleExistingGuest(event: Event) {

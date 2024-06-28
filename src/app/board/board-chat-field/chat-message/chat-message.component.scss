@@ -187,7 +187,6 @@
 
 .message-container {
     width: 80%;
-    //min-width: 352px;
     @include d-flex(column, flex-start, flex-start, 8px);
     font-family: "Nunito";
 
@@ -281,6 +280,10 @@
         font-size: 18px;
         font-weight: 400;
         color: $specialBlue;
+
+        >span {
+            cursor: pointer;
+        }
     }
 
     >.last-answer-container {

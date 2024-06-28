@@ -4,6 +4,7 @@ import { BoardService } from '../board.service';
 import { FirestoreService } from '../../shared/services/firestore-service/firestore.service';
 import { SearchDialogComponent } from "../board-toolbar/search-dialog/search-dialog.component";
 import { FormsModule } from '@angular/forms';
+import { PrivateChat } from '../../shared/models/privateChat.class';
 
 @Component({
   selector: 'app-sidenav',
@@ -21,6 +22,12 @@ export class SidenavComponent {
   canTranslateYChannel: boolean = true;
   canTranslateYUserList: boolean = true;
   searchText: string = "";
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
 
   onHeaderClick() {
     if (!this.channelHeaderIsClicked) {

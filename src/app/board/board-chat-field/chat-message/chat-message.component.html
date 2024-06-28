@@ -59,7 +59,8 @@
         </div>
         }
     </span>
-    <div [ngClass]="{'background-highlight': boardServ.highlightArrayForTheChannelElementSearched[chatMessageIndex]}" (mouseover)="onHover('message-box')" (mouseleave)="onLeave('message-box')"
+    <div [ngClass]="{'background-highlight': boardServ.highlightArrayForTheChannelElementSearched[chatMessageIndex]}"
+        (mouseover)="onHover('message-box')" (mouseleave)="onLeave('message-box')"
         [ngStyle]="{'background-color': mouseIsOverMessage ? 'rgb(236, 238, 254)' : '#fff'}" class="message-box"
         [class.message-box-reverse]="chat.user.id == boardServ.currentUser.id">
         <img class="avatar-photo" src="{{ chat.user.avatarPath }}" alt="">
@@ -129,13 +130,14 @@
 
 <!-- Image popup -->
 @if (showFile) {
-<div class="file-popup">
+<div class="file-popup" (click)="toggleFilePreview()">
     <div class="img-container">
         <img src="{{ chat.fileUpload }}" alt="" class="img-in-popup">
         <a href="{{ chat.fileUpload }}" download="download.image.png" target="_blank"
             (click)="boardServ.stopPropagation($event)" class="link"><img src="assets/icons/download_icon.png" alt=""
                 class="download-icon"></a>
-        <img src="assets/icons/close.svg" alt="" class="close-icon" (click)="toggleFilePreview()">
+        <span class="close-icon-container"><img src="assets/icons/close.svg" alt="" class="close-icon"
+                (click)="toggleFilePreview()"></span>
     </div>
 </div>
 }

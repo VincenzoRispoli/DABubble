@@ -14,7 +14,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage-serv
   styleUrls: ['./private-chat-message.component.scss', './private-chat-media-queries.component.scss']
 })
 export class PrivateChatMessageComponent extends ChatMessageComponent implements AfterViewChecked, OnDestroy {
-  @ViewChildren('messageElements') messageElements!: QueryList<ElementRef>;
+  @ViewChildren('messageElement') messageElements!: QueryList<ElementRef>;
   @Input() privateChatId?: string;
   @Input() privateMessage!: ChatMessage;
   @Input() privateChatIndex!: number;
@@ -49,7 +49,6 @@ export class PrivateChatMessageComponent extends ChatMessageComponent implements
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.currentWindowWidth = event.target.innerWidth;
-    // console.log(this.currentWindowWidth);
   }
 
   openTheTools() {

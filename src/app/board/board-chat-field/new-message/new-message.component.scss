@@ -35,7 +35,7 @@
     position: absolute;
     top: 108px;
     left: 0;
-    width: 50%;
+    min-width: 250px;
     @include d-flex($fd:column, $g: 12px, $ai: flex-start);
     padding: 15px 15px;
     border-radius: 30px;

@@ -75,7 +75,9 @@ export class LocalStorageService {
       seleted: obj.selected || false,
       loginState: obj.loginState || 'loggedOut',
       type: obj.type || 'CurrentUser',
-      notification: obj.notification || []
+      notification: obj.notification || [],
+      privatNotification: obj.privatNotification || [],
+      newPrivateMessage: obj.newPrivateMessage || false
     }
   }
 

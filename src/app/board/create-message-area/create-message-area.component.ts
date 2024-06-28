@@ -161,12 +161,8 @@ export class CreateMessageAreaComponent {
   }
 
   async deleteFile() {
-    await this.fbStorageService.deleteFile(this.filePath)
-      .then(() => {
-        this.uploadedFile = '';
-        this.filePath = '';
-        console.log(this.uploadedFile);
-      });
+    this.uploadedFile = '';
+    this.filePath = '';
   }
 
   addEmoji(event: any) {
@@ -219,10 +215,7 @@ export class CreateMessageAreaComponent {
           if (this.member != null) {
             this.notificationObject = new NotificationObj();
             this.setNotificationObject();
-            this.member.notification.push(this.notificationObject)
-            console.log('member beim senden', this.member);
-            console.log(this.member.notification);
-            console.log(this.textMessage);
+            this.member.notification.push(this.notificationObject);
             if (this.member.id) {
               if (this.member.id == this.boardService.currentUser.id) {
                 this.boardService.currentUser.notification.push(this.notificationObject.toJSON());
@@ -236,7 +229,8 @@ export class CreateMessageAreaComponent {
             }
           }
         })
-        this.textMessage = "";
+      this.textMessage = "";
+      this.uploadedFile = "";
     }
   }
 
@@ -290,7 +284,7 @@ export class CreateMessageAreaComponent {
       answers: [],
       reactions: [],
       fileUpload: this.uploadedFile,
-      type: 'ChatMessage'
+      type: 'ChatMessage',
     }
   }
 }

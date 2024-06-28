@@ -9,6 +9,7 @@ import { CurrentUser } from '../../shared/interfaces/currentUser.interface';
 import { ChatMessage } from '../../shared/interfaces/chatMessage.interface';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { PrivateChat } from '../../shared/models/privateChat.class';
+import { PrivateNotification } from '../../shared/models/privateNotification.class';
 
 @Component({
   selector: 'app-create-private-message-area',
@@ -28,17 +29,37 @@ export class CreatePrivateMessageAreaComponent extends CreateMessageAreaComponen
 
   currentChatPartner!: CurrentUser;
   privateChat!: ChatMessage[];
+  privChatRoom!: PrivateChat;
+  privChatRoomId?: string;
   chatId?: string;
   override message!: ChatMessage;
+
+  privateNotification: PrivateNotification = new PrivateNotification();
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
+    this.privChatRoom = this.firestore.directMessages[this.boardServ.chatPartnerIdx];
     this.privateChat = this.firestore.directMessages[this.boardServ.chatPartnerIdx].chat;
+    console.log(this.boardServ.privateChatId);
+    setTimeout(() => {
+      this.resetPrivateNotification();
+    }, 100)
   }
 
+  async resetPrivateNotification() {
+    if (this.boardServ.resetCreatorPrivateNotification && this.boardServ.privateChatId) {
+      this.privChatRoom.guest.privatNotification = [];
+      await this.firestore.updateGuest(this.boardServ.privateChatId, this.privChatRoom.guest);
+      this.boardServ.resetCreatorPrivateNotification = false;
+    } else if (this.boardServ.resetGuestPrivateNotification && this.boardServ.privateChatId) {
+      this.privChatRoom.creator.privatNotification = [];
+      await this.firestore.updateCreator(this.boardServ.privateChatId, this.privChatRoom.creator);
+      this.boardServ.resetGuestPrivateNotification = false;
+    }
+  }
   override toggleTagMemberDialog() {
     this.filteredMembers = this.allUsers;
     this.tagMembers = !this.tagMembers
@@ -58,6 +79,12 @@ export class CreatePrivateMessageAreaComponent extends CreateMessageAreaComponen
       if (this.message.message.trim() !== '' || this.uploadedFile.length > 0) {
         await this.firestore.updatePrivateChat(this.boardServ.privateChatId, this.message)
           .then(() => {
+            this.setPrivateNotificationObject();
+            if (this.currentUserIsCreator()) {
+              this.addNewNotificationAndShowPopUpNotificationForCreator();
+            } else if (this.currentUserIsGuest()) {
+              this.addNewNotificationAndShowPopUpNotificationForGuest();
+            }
             this.resetTextArea();
           });
         setTimeout(() => {
@@ -67,6 +94,53 @@ export class CreatePrivateMessageAreaComponent extends CreateMessageAreaComponen
     }
   }
 
+  currentUserIsCreator() {
+    return this.boardServ.currentUser.id === this.privChatRoom.creator.id;
+  }
+
+  currentUserIsGuest() {
+    return this.boardServ.currentUser.id === this.privChatRoom.guest.id;
+  }
+
+  addNewNotificationAndShowPopUpNotificationForCreator() {
+    this.privChatRoom.creator.privatNotification.push(this.privateNotification.toJSON());
+    if (this.boardServ.privateChatId) {
+      this.privChatRoom.creator.newPrivateMessage = true;
+      this.firestore.updateCreator(this.boardServ.privateChatId, this.privChatRoom.creator);
+      this.hideCreatorNewPrivateMessage(this.boardServ.privateChatId, this.privChatRoom.creator);
+    }
+  }
+
+  addNewNotificationAndShowPopUpNotificationForGuest() {
+    this.privChatRoom.guest.privatNotification.push(this.privateNotification.toJSON());
+    if (this.boardServ.privateChatId) {
+      this.privChatRoom.guest.newPrivateMessage = true;
+      this.firestore.updateGuest(this.boardServ.privateChatId, this.privChatRoom.guest);
+      this.hideGuestNewPrivateMessage(this.boardServ.privateChatId, this.privChatRoom.guest);
+    }
+  }
+
+  setPrivateNotificationObject() {
+    this.privateNotification.creatorId = this.boardServ.currentUser.id
+    this.privateNotification.creatorName = this.boardServ.currentUser.name
+    this.privateNotification.date = new Date().getTime()
+    this.privateNotification.text = this.message.message
+  }
+
+  hideCreatorNewPrivateMessage(chatId: string, creator: CurrentUser) {
+    setTimeout(() => {
+      this.privChatRoom.creator.newPrivateMessage = false;
+      this.firestore.updateCreator(chatId, creator);
+    }, 2000)
+  }
+
+  hideGuestNewPrivateMessage(chatId: string, guest: CurrentUser) {
+    setTimeout(() => {
+      this.privChatRoom.guest.newPrivateMessage = false;
+      this.firestore.updateGuest(chatId, guest);
+    }, 2000)
+  }
+
   setAnswerMessage() {
     if (this.boardServ.privateAnswerMessage != null) {
       this.message.answers.push(this.boardServ.privateAnswerMessage);
@@ -74,11 +148,16 @@ export class CreatePrivateMessageAreaComponent extends CreateMessageAreaComponen
   }
 
   showMessageInChat() {
-    let idx = this.firestoreService.directMessages.findIndex((dm: PrivateChat) => dm.guest.id == this.boardServ.currentChatPartner.id)
-    if (idx == -1) {
+    let idx;
+    idx = this.firestoreService.directMessages.findIndex((dm: PrivateChat) => dm.guest.id == this.boardServ.currentChatPartner.id);
+    if (idx !== -1) {
+      this.boardServ.startPrivateChat(idx, 'creator', event);
+    } else {
       idx = this.firestoreService.directMessages.findIndex((dm: PrivateChat) => dm.creator.id == this.boardServ.currentChatPartner.id)
+      if (idx !== -1) {
+        this.boardServ.startPrivateChat(idx, 'guest', event);
+      }
     }
-    this.boardServ.startPrivateChat(idx, 'creator', event);
   }
 
   override resetTextArea() {
@@ -112,7 +191,7 @@ export class CreatePrivateMessageAreaComponent extends CreateMessageAreaComponen
       answers: [],
       reactions: [],
       fileUpload: this.uploadedFile,
-      type: 'ChatMessage'
+      type: 'ChatMessage',
     }
   }
 }

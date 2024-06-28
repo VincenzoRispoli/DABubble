@@ -10,4 +10,6 @@ export interface CurrentUser {
     loginState: 'loggedIn' | 'loggedOut' | 'idle';
     type: 'CurrentUser';
     notification: any[];
+    privatNotification:any[];
+    newPrivateMessage: boolean;
 }

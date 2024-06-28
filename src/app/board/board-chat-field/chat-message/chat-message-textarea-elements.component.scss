@@ -96,34 +96,18 @@ textarea {
     transition: all .125s ease-in-out;
 }
 
-.close-icon {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
-    padding: 4px;
-    border-radius: 100%;
-    opacity: 0;
-    transition: all .125s ease-in-out;
-
-    &:hover {
-        background-color: #ECEEFE;
-    }
-}
-
 .file-popup {
+    @include d-flex();
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     background-color: rgba($color: #000000, $alpha: .15);
-    @include d-flex();
     z-index: 99;
 
     .img-container {
-        @include d-flex();
+        @include d-flex(column-reverse, center, center, 8px);
         background-color: white;
         padding: 24px;
         border-radius: 25px;
@@ -160,23 +144,27 @@ textarea {
                 height: 64px;
             }
         }
-    }
 
+        >.close-icon-container {
+            @include d-flex(row, flex-end, center, 0px);
+            width: 100%;
 
-    .close-icon {
-        cursor: pointer;
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        padding: 4px;
-        border-radius: 100%;
-        transition: all .125s ease-in-out;
+            .close-icon {
+                cursor: pointer;
+                height: 32px;
+                width: 32px;
+                padding: 4px;
+                border-radius: 100%;
+                transition: all .125s ease-in-out;
 
-        &:hover {
-            background-color: #ECEEFE;
-            transform: scale(1.2);
+                &:hover {
+                    background-color: #ECEEFE;
+                    transform: scale(1.2);
+                }
+            }
         }
     }
+
 }
 
 .background-highlight {

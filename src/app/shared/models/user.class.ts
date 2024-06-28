@@ -11,6 +11,8 @@ export class User {
     selected: boolean;
     loginState: 'loggedIn' | 'loggedOut' | 'idle';
     notification: any[];
+    privateNotification: any[];
+    newPrivateMessage: boolean;
 
     constructor(obj?: any) {
         this.id = obj ? obj.id : '';
@@ -21,5 +23,7 @@ export class User {
         this.selected = false;
         this.loginState = 'loggedOut';
         this.notification = obj ? obj.notification : [];
+        this.privateNotification = obj ? obj.privateNotification : [];
+        this.newPrivateMessage = obj ? obj.newPrivateMessage : false;
     }
 }
